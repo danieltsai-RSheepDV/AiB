@@ -9644,7 +9644,7 @@ WindZone:
   m_Enabled: 1
   m_Mode: 0
   m_Radius: 20
-  m_WindMain: 1
+  m_WindMain: 18.76
   m_WindTurbulence: 1
   m_WindPulseMagnitude: 0.5
   m_WindPulseFrequency: 0.01
@@ -21683,6 +21683,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size
       value: 27.934734
+      objectReference: {fileID: 0}
+    - target: {fileID: 8019874473750285387, guid: 869b58e7e995a5943a990d58af0f79ed,
+        type: 3}
+      propertyPath: m_FadeMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8019874473750285387, guid: 869b58e7e995a5943a990d58af0f79ed,
         type: 3}
