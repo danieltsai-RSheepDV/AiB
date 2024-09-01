@@ -3,3 +3,4 @@ A short first person game all about exploring the seas around a mysterious islan
 
 Currently unreleased
 
+<img width="631" alt="image" src="https://github.com/user-attachments/assets/aa02c077-2036-4a41-8373-e55369a29dda">
