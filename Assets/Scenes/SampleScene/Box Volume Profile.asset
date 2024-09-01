@@ -39,7 +39,7 @@ MonoBehaviour:
     m_Value: 1
   scatter:
     m_OverrideState: 0
-    m_Value: 0.7
+    m_Value: 0.915
   clamp:
     m_OverrideState: 0
     m_Value: 65472
@@ -76,17 +76,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   contrast:
     m_OverrideState: 1
     m_Value: 0
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.70647913, g: 0.7675106, b: 0.7924528, a: 1}
+    m_Value: {r: 0.8160377, g: 1, b: 0.8802327, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
   saturation:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
