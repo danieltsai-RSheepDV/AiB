@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Move : MonoBehaviour
 {
@@ -77,7 +78,7 @@ public class Move : MonoBehaviour
     }
 
     [SerializeField] private MicrophoneInput mic;
-    [SerializeField] private Volume breathVolume;
+    [SerializeField] private Image breathVolume;
     [SerializeField] private Volume chokingVolume;
     private bool breathingPaused = false;
     private bool isInhaling = true;
@@ -89,7 +90,6 @@ public class Move : MonoBehaviour
     {
         if (breathingPaused)
         {
-            breathVolume.weight = 0;
             chokingVolume.weight = 0;
             airMeter = maxAir;
             isInhaling = true;
@@ -111,7 +111,7 @@ public class Move : MonoBehaviour
 
         airMeter -= Time.deltaTime;
         chokingVolume.weight = Math.Max(0, 4f - airMeter)/4f;
-        breathVolume.weight = mic.breathValue;
+        breathVolume.transform.localScale = Vector3.one * (Mathf.Clamp(mic.breathValue, 0, maxAir) * 3f);
         if (airMeter < 0)
         {
             ToggleSwim(false);
@@ -121,7 +121,7 @@ public class Move : MonoBehaviour
     private void Update()
     {
         LimitDistance();
-        // BreathingTracker();
+        BreathingTracker();
         
         // Handle camera rotation
         Vector2 lookVector = lookAction.ReadValue<Vector2>();

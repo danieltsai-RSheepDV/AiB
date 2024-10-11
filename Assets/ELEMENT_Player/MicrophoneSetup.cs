@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MicrophoneSetup : MonoBehaviour
@@ -158,14 +159,20 @@ public class MicrophoneSetup : MonoBehaviour
             case 4:
                 if (Average(micData) > normalCutoff)
                 {
-                    if (ZCR(highPassData) < highPassCutoff)
+                    if (ZCR(highPassData) < highPassCutoff && circle.transform.localScale.magnitude < 3)
                     {
                         circle.transform.localScale += Vector3.one * Time.deltaTime;
                     }
-                    else
+                    else if (circle.transform.localScale.magnitude > 0)
                     {
                         circle.transform.localScale -= Vector3.one * Time.deltaTime;
                     }
+                }
+                if (jumpAction.WasPressedThisFrame())
+                {
+                    loadingBar.gameObject.SetActive(true);
+                    StartCoroutine(LoadWorld());
+                    stage = 5;
                 }
                 break;
         }
@@ -175,6 +182,19 @@ public class MicrophoneSetup : MonoBehaviour
         //     normalTriggered = Average(micData) > normalCutoff;
         //     highPassTriggered = Average(highPassData) > highPassCutoff;
         // }
+    }
+
+    [SerializeField] private Slider loadingBar;
+    private IEnumerator LoadWorld()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync("World");
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            loadingBar.value = progress;
+            yield return null;
+        }
     }
 
     private float Average(float[] array)
