@@ -10742,6 +10742,7 @@ GameObject:
   - component: {fileID: 681896225}
   - component: {fileID: 681896224}
   - component: {fileID: 681896226}
+  - component: {fileID: 681896227}
   m_Layer: 0
   m_Name: Mic
   m_TagString: Untagged
@@ -10762,6 +10763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sampleCount: 8192
+  micData: []
   normalCutoff: 0
   highPassCutoff: 0
   lerpVelocity: 0
@@ -10877,6 +10879,47 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &681896227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681896223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65bfef609686d44c69d900c6e5df8ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAutoStart: 1
+  micIndex: 0
+  readyEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  startEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  stopEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  deviceListEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  dataEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 681896224}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &690020346
 PrefabInstance:
   m_ObjectHideFlags: 0

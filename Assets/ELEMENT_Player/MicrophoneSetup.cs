@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using uMicrophoneWebGL;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(MicrophoneWebGL))]
 public class MicrophoneSetup : MonoBehaviour
 {
     public int sampleCount = 64;
     
-    private AudioClip _micClip;
+    // private AudioClip _micClip;
     private RawLowPassFilter lowPassFilter;
     private RawHighPassFilter highPassFilter;
     
@@ -19,8 +21,6 @@ public class MicrophoneSetup : MonoBehaviour
     {
         inputActionSet = new AiBInput();
         jumpAction = inputActionSet.Player.Jump;
-        
-        _micClip = Microphone.Start(null, true, 10, 44100);
         
         lowPassFilter = new RawLowPassFilter(1000.0, AudioSettings.outputSampleRate);
         highPassFilter = new RawHighPassFilter(1200.0f, AudioSettings.outputSampleRate);  // 100 Hz cutoff frequency
@@ -55,12 +55,14 @@ public class MicrophoneSetup : MonoBehaviour
     private float timer = 0;
     private int stage = 0;
     private int breathCount = 0;
+
+    public float[] micData;
     
     // Update is called once per frame
     void Update()
     {
-        float[] micData = lowPassFilter.ApplyFilter(GetMicrophoneData());
-        float[] highPassData = highPassFilter.ApplyFilter(GetMicrophoneData());
+        float[] micData = lowPassFilter.ApplyFilter(this.micData);
+        float[] highPassData = highPassFilter.ApplyFilter(this.micData);
         timer -= Time.deltaTime;
         switch (stage)
         {
@@ -223,19 +225,8 @@ public class MicrophoneSetup : MonoBehaviour
         return counter;
     }
 
-    public float[] GetMicrophoneData()
+    public void GetMicrophoneData(float[] data)
     {
-        float[] waveData = new float[sampleCount];
-        
-        int startPosition = Microphone.GetPosition(Microphone.devices[0]) - sampleCount;
-        
-        if (startPosition < 0)
-        {
-            return waveData;
-        }
-        
-        _micClip.GetData(waveData, startPosition);
-        
-        return waveData;
+        micData = data;
     }
 }

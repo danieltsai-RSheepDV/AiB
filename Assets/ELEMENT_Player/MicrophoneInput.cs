@@ -10,11 +10,12 @@ public class MicrophoneInput : MonoBehaviour
     private AudioClip _micClip;
     private RawLowPassFilter lowPassFilter;
     private RawHighPassFilter highPassFilter;
+
+    public float[] micData;
     
     // Start is called before the first frame update
     void Start()
     {
-        _micClip = Microphone.Start(null, true, 10, 44100);
         
         lowPassFilter = new RawLowPassFilter(1000.0, AudioSettings.outputSampleRate);
         highPassFilter = new RawHighPassFilter(1200.0f, AudioSettings.outputSampleRate);  // 100 Hz cutoff frequency
@@ -35,8 +36,8 @@ public class MicrophoneInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float[] micData = lowPassFilter.ApplyFilter(GetMicrophoneData());
-        float[] highPassData = highPassFilter.ApplyFilter(GetMicrophoneData());
+        float[] micData = lowPassFilter.ApplyFilter(this.micData);
+        float[] highPassData = highPassFilter.ApplyFilter(this.micData);
         if (Average(micData) > normalCutoff)
         {
             if (ZCR(highPassData) > highPassCutoff)
@@ -85,19 +86,8 @@ public class MicrophoneInput : MonoBehaviour
         return counter;
     }
 
-    public float[] GetMicrophoneData()
+    public void GetMicrophoneData(float[] data)
     {
-        float[] waveData = new float[sampleCount];
-        
-        int startPosition = Microphone.GetPosition(Microphone.devices[0]) - sampleCount;
-        
-        if (startPosition < 0)
-        {
-            return waveData;
-        }
-        
-        _micClip.GetData(waveData, startPosition);
-        
-        return waveData;
+        micData = data;
     }
 }
